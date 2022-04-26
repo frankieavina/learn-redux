@@ -2,48 +2,35 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+// importing store from redux
+import {createStore} from 'redux';
+import allReducers from './reducers'; // dont need /index.js 
+// hooding it up to our <App/>
+import {Provider, useDispatch} from 'react-redux'
 
-import {createStore} from 'react-redux'; 
-
-// STORE : hold all data and state for our app. -> Globolized state 
-
-
-// ACTION: what action to perform-> Increment 
-const increment = () => {
-  return {
-    type: 'INCREMENT'
-  }
-}
-
-const decrement = () => {
-  return {
-    type: 'DECREMENT'
-  }
-}
-
-// REDUCER: Describes how your actions transforms state into the next state -> so reducer 
-//          checks what action you did and based on the action performed its gonna 
-//          modify our store 
-    // the parameters it will take is a state, our initial value, and action 
-const counter = (state=0, action) => {
-  switch(action.type){ // depending on the action.type we will either return state+1 or state-1
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-  }
-}
+// hooking up two pieces of state (counter and isLogged in) to our store
+// extension to view our reducers(state(s))
+const store = createStore(allReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 
-// DISPATCH: Where we execute that action. So we dispatch this action to the reducer
-
-
-e
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* Gives our app access to our store  */}
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
 
+// 1) add actions and reducers folder 
+// 2) add reducers/index.js and reducers js files 
+// 3) input logic for reducers 
+// 4) inside reducers/index.js combine the reducers (if theres more then one)
+// 5) create store in src/index.js and provider so app can access store 
+// 6) optional: add tool to see store state in chrome 
+// 7. access state using useSelector 
+// 8. to modify state: create actions/index.js add our actions
+// 9. import our action wherever we want to use it and use useDispatch to dispatch action
+// 10. use dipatch to dispact action 
